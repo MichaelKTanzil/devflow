@@ -61,10 +61,11 @@ const config: Config = {
       },
     },
   },
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
+
   plugins: [
     tailwindcssAnimate,
     tailwindTypography,
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     require("tailwindcss-animate"),
   ],
 };

@@ -2,6 +2,7 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 
 import { FlatCompat } from "@eslint/eslintrc";
+import tsParser from "@typescript-eslint/parser";
 import importPlugin from "eslint-plugin-import";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,18 +12,21 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: { root: true },
   ignorePatterns: ["components/ui/**"],
-  overrides: [
-    {
-      files: ["*.ts", "*.tsx"],
-      rules: {
-        "no-undef": "off",
-      },
-    },
-  ],
 });
 
 const eslintConfig = [
   {
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: {
+          jsx: true,
+        },
+        project: "./tsconfig.json",
+      },
+    },
     plugins: {
       import: importPlugin,
     },
@@ -34,6 +38,9 @@ const eslintConfig = [
       },
     },
     rules: {
+      // Disable 'no-undef' as TypeScript handles undefined variables
+      "no-undef": "off",
+      // Enforce consistent import ordering
       "import/order": [
         "error",
         {
@@ -70,6 +77,10 @@ const eslintConfig = [
           },
         },
       ],
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { vars: "all", args: "after-used", ignoreRestSiblings: true },
+      ],
     },
   },
   ...compat.extends(
@@ -77,6 +88,7 @@ const eslintConfig = [
     "next/typescript",
     "eslint:recommended",
     "standard",
+    "plugin:@typescript-eslint/recommended",
     "plugin:tailwindcss/recommended",
     "prettier"
   ),

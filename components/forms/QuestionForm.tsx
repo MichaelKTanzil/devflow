@@ -63,7 +63,7 @@ const QuestionForm = () => {
       if (field.value.length >= 3) {
         form.setError("tags", {
           type: "manual",
-          message: "You can only add up to 3 tags",
+          message: "You can only add up to 3 tags"
         });
         return;
       }

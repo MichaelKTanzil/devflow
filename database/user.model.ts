@@ -2,7 +2,7 @@ import { model, models, Schema, Document } from "mongoose";
 
 export interface IUser {
   name: string;
-  userName: string;
+  username: string;
   email: string;
   bio?: string;
   image?: string;
@@ -14,7 +14,7 @@ export interface IUserDoc extends IUser, Document {}
 const UserSchema = new Schema<IUser>(
   {
     name: { type: String, required: true },
-    userName: { type: String, required: true },
+    username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     bio: { type: String },
     image: { type: String },
@@ -25,6 +25,6 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true }
 );
 
-const User = models?.user || model<IUser>("User", UserSchema);
+const User = models?.User || model<IUser>("User", UserSchema);
 
 export default User;
